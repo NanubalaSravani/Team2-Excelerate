@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'registration_screen.dart';
 
 class ProgramDetailScreen extends StatefulWidget {
   final Map<String, String> program;
@@ -293,14 +294,12 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                          'Enrolled in ${program['title'] ?? 'program'}!'),
-                      backgroundColor: const Color(0xFF4A90D9),
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegistrationScreen(
+                        program: program,
+                      ),
                     ),
                   );
                 },

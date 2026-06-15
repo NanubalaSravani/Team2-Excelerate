@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'program_detail_screen.dart';
 
 class ProgramListScreen extends StatefulWidget {
@@ -13,57 +15,36 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
 
   final List<String> _filters = ['popular', 'All', 'beginner', 'Advanced', 'Latest'];
 
-  final List<Map<String, String>> _programs = [
-    {
-      'title': 'Flutter for Beginners',
-      'description': 'Learn Flutter from scratch and build your first mobile app with hands-on projects.',
-      'duration': '4 weeks',
-      'level': 'Beginner',
-      'rating': '4.8',
-      'reviews': '120',
-    },
-    {
-      'title': 'UI/UX Design Fundamentals',
-      'description': 'Master the principles of user interface and experience design using modern tools.',
-      'duration': '3 weeks',
-      'level': 'Beginner',
-      'rating': '4.6',
-      'reviews': '98',
-    },
-    {
-      'title': 'Digital Marketing Bootcamp',
-      'description': 'Learn SEO, social media, content marketing, and paid advertising strategies.',
-      'duration': '5 weeks',
-      'level': 'Intermediate',
-      'rating': '4.7',
-      'reviews': '215',
-    },
-    {
-      'title': 'Python for Data Science',
-      'description': 'Explore data analysis, visualization, and machine learning using Python.',
-      'duration': '6 weeks',
-      'level': 'Advanced',
-      'rating': '4.9',
-      'reviews': '340',
-    },
-    {
-      'title': 'Business Strategy Essentials',
-      'description': 'Understand core business strategy frameworks and apply them to real scenarios.',
-      'duration': '4 weeks',
-      'level': 'Intermediate',
-      'rating': '4.5',
-      'reviews': '88',
-    },
-    {
-      'title': 'Graphic Design with Canva',
-      'description': 'Create stunning visual content for social media, presentations, and branding.',
-      'duration': '2 weeks',
-      'level': 'Beginner',
-      'rating': '4.4',
-      'reviews': '175',
-    },
-  ];
+  List<Map<String, String>> _programs = [];
+  bool _isLoading = true;
+  String _errorMessage = '';
 
+  @override
+  void initState() {
+    super.initState();
+    _fetchPrograms();
+  }
+
+  Future<void> _fetchPrograms() async {
+    try {
+      // Simulate a network delay for the loading indicator
+      await Future.delayed(const Duration(seconds: 1));
+      
+      final String response = await rootBundle.loadString('assets/programs.json');
+      final List<dynamic> data = json.decode(response);
+      
+      setState(() {
+        _programs = data.map((e) => Map<String, String>.from(
+            e.map((key, value) => MapEntry(key.toString(), value.toString())))).toList();
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Failed to load programs: $e';
+        _isLoading = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +158,16 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
 
           // Program list
           Expanded(
-            child: ListView.builder(
+            child: _isLoading 
+              ? const Center(child: CircularProgressIndicator()) 
+              : _errorMessage.isNotEmpty 
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(_errorMessage, style: const TextStyle(color: Colors.red)),
+                    ),
+                  )
+                : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemCount: _programs.length,
               itemBuilder: (context, index) {

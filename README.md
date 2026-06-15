@@ -242,8 +242,23 @@ LoginScreen
 |------|-------|--------|
 | Week 1 | Planning, wireframes, repo setup | ✅ Done |
 | Week 2 | Core UI screens + navigation | ✅ Done |
-| Week 3 | Backend integration, real data, auth | 🔜 Upcoming |
+| Week 3 | Backend integration, real data, auth | ✅ Done |
 | Week 4 | Dashboard, progress tracking, polish | 🔜 Upcoming |
 
 ---
-"# Team2-Excelerate" 
+
+## Week 3 — Data Fetching & Forms ✅
+
+### What Was Built
+We integrated sample JSON data to dynamically populate our program list, simulating real API calls. We also introduced a new `RegistrationScreen` with proper form validation to allow users to enroll in programs.
+
+### Deliverables
+- ✅ Created `assets/programs.json` with sample program data.
+- ✅ Updated `ProgramListScreen` to fetch JSON data asynchronously using `rootBundle` and `json.decode`.
+- ✅ Implemented loading indicators (`CircularProgressIndicator`) and error handling while fetching data.
+- ✅ Created a functional `RegistrationScreen` containing a Flutter `Form`.
+- ✅ Added `TextFormField`s (Name, Email, Password) and `DropdownButtonFormField` (Experience Level) with robust validation logic (e.g. valid email format, minimum password length).
+- ✅ Replaced the snackbar placeholder on the `ProgramDetailScreen`'s "Enroll Now" button with navigation to the registration form.
+
+---
+"# Team2-Excelerate"
