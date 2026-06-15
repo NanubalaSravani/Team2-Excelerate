@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Flutter-3.0%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white"/>
   <img src="https://img.shields.io/badge/Dart-3.0%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white"/>
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20iOS-lightgrey?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Status-Week%202%20Complete-4A90D9?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Week%203%20Complete-4A90D9?style=for-the-badge"/>
 </p>
 
 ---
@@ -260,5 +260,18 @@ We integrated sample JSON data to dynamically populate our program list, simulat
 - ✅ Added `TextFormField`s (Name, Email, Password) and `DropdownButtonFormField` (Experience Level) with robust validation logic (e.g. valid email format, minimum password length).
 - ✅ Replaced the snackbar placeholder on the `ProgramDetailScreen`'s "Enroll Now" button with navigation to the registration form.
 
+### State Management & User Experience
+
+- ✅ Used Flutter's `setState()` for managing loading, success, and error states.
+- ✅ Added `CircularProgressIndicator` while fetching program data.
+- ✅ Implemented try-catch error handling for JSON loading failures.
+- ✅ Displayed user-friendly error messages instead of crashing the application.
+
+### Files Added
+
+- `assets/programs.json`
+- `lib/models/program.dart`
+- `lib/services/program_service.dart`
+- `lib/screens/registration_screen.dart`
 ---
 "# Team2-Excelerate"
