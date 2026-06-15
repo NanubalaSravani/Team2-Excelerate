@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../models/program.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  final Map<String, String>? program;
+  final Program? program;
 
   const RegistrationScreen({super.key, this.program});
 
@@ -28,7 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Registration Successful'),
-          content: Text('Thank you $_name! You are now registered for ${widget.program?['title'] ?? 'the program'}.'),
+          content: Text('Thank you $_name! You are now registered for ${widget.program?.title ?? 'the program'}.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -45,7 +46,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.program?['title'] ?? 'Program';
+    final title = widget.program?.title ?? 'Program';
     
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),

@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../models/program.dart';
+import '../services/program_service.dart';
 import 'program_detail_screen.dart';
 
 class ProgramListScreen extends StatefulWidget {
@@ -15,9 +15,10 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
 
   final List<String> _filters = ['popular', 'All', 'beginner', 'Advanced', 'Latest'];
 
-  List<Map<String, String>> _programs = [];
+  List<Program> _programs = [];
   bool _isLoading = true;
   String _errorMessage = '';
+  final ProgramService _programService = ProgramService();
 
   @override
   void initState() {
@@ -27,20 +28,14 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
 
   Future<void> _fetchPrograms() async {
     try {
-      // Simulate a network delay for the loading indicator
-      await Future.delayed(const Duration(seconds: 1));
-      
-      final String response = await rootBundle.loadString('assets/programs.json');
-      final List<dynamic> data = json.decode(response);
-      
+      final data = await _programService.fetchPrograms();
       setState(() {
-        _programs = data.map((e) => Map<String, String>.from(
-            e.map((key, value) => MapEntry(key.toString(), value.toString())))).toList();
+        _programs = data;
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _errorMessage = 'Failed to load programs: $e';
+        _errorMessage = e.toString();
         _isLoading = false;
       });
     }
@@ -226,7 +221,7 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  program['title']!,
+                                  program.title,
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -237,7 +232,7 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  program['description']!,
+                                  program.description,
                                   style: const TextStyle(
                                     fontSize: 11,
                                     color: Color(0xFF888888),
@@ -256,7 +251,7 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      'Today · ${program['duration']}',
+                                      'Today · ${program.duration}',
                                       style: const TextStyle(
                                         fontSize: 11,
                                         color: Color(0xFF888888),

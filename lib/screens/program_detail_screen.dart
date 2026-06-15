@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../models/program.dart';
 import 'registration_screen.dart';
 
 class ProgramDetailScreen extends StatefulWidget {
-  final Map<String, String> program;
+  final Program program;
 
   const ProgramDetailScreen({super.key, required this.program});
 
@@ -89,7 +90,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
-                            '${program['level'] ?? 'Beginner'} friendly',
+                            '${program.level} friendly',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -108,7 +109,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                       children: [
                         // Title
                         Text(
-                          program['title'] ?? 'Program',
+                          program.title,
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -125,7 +126,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                                 color: Color(0xFFFFC107), size: 20),
                             const SizedBox(width: 4),
                             Text(
-                              '${program['rating'] ?? '4.6'} (${program['reviews'] ?? '100'} reviews)',
+                              '${program.rating} (${program.reviews} reviews)',
                               style: const TextStyle(
                                 fontSize: 13,
                                 color: Color(0xFF555555),
@@ -184,8 +185,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    program['description'] ??
-                                        'This program is designed for learners who want to build real skills and grow professionally.',
+                                    program.description,
                                     style: const TextStyle(
                                       fontSize: 13,
                                       color: Color(0xFF555555),
@@ -197,7 +197,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                                   _infoRow(
                                     Icons.access_time_rounded,
                                     'Duration',
-                                    program['duration'] ?? '4 weeks',
+                                    program.duration,
                                   ),
                                   const SizedBox(height: 12),
                                   _infoRow(
