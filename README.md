@@ -247,31 +247,42 @@ LoginScreen
 
 ---
 
-## Week 3 — Data Fetching & Forms ✅
+## Week 3 — Data Fetching, Forms & Refactoring ✅
 
 ### What Was Built
-We integrated sample JSON data to dynamically populate our program list, simulating real API calls. We also introduced a new `RegistrationScreen` with proper form validation to allow users to enroll in programs.
+We integrated sample JSON data to dynamically populate our program list, simulating real API calls. We refactored the app architecture to use a clean `models` and `services` structure, and introduced interactive forms with robust input validation.
 
 ### Deliverables
-- ✅ Created `assets/programs.json` with sample program data.
-- ✅ Updated `ProgramListScreen` to fetch JSON data asynchronously using `rootBundle` and `json.decode`.
-- ✅ Implemented loading indicators (`CircularProgressIndicator`) and error handling while fetching data.
-- ✅ Created a functional `RegistrationScreen` containing a Flutter `Form`.
-- ✅ Added `TextFormField`s (Name, Email, Password) and `DropdownButtonFormField` (Experience Level) with robust validation logic (e.g. valid email format, minimum password length).
-- ✅ Replaced the snackbar placeholder on the `ProgramDetailScreen`'s "Enroll Now" button with navigation to the registration form.
+- ✅ **API Integration:** Created `assets/programs.json` and a `ProgramService` to fetch dynamic program data asynchronously using `rootBundle`.
+- ✅ **Registration Form:** Built `RegistrationScreen` with proper form validation (valid email format, minimum password length, etc.) using `TextFormField` and `DropdownButtonFormField`.
+- ✅ **Feedback Form:** Added a functional feedback/rating form on the `ProgramDetailScreen`.
+- ✅ **App Architecture:** Refactored the app structure into `models/` and `services/` for better code maintainability.
+
+### Screens Added
+
+#### Screen 5 — Registration Screen
+Contains form validation to ensure users enter valid details before enrolling in a program.
+<p align="center">
+  <img src="assets/screenshots/registration.png" width="280" alt="Registration Screen"/>
+</p>
+
+#### Screen 6 — Feedback Form (Program Detail)
+Allows learners to leave reviews and feedback on specific courses.
+<p align="center">
+  <img src="assets/screenshots/feedback.png" width="280" alt="Feedback Form"/>
+</p>
 
 ### State Management & User Experience
-
 - ✅ Used Flutter's `setState()` for managing loading, success, and error states.
-- ✅ Added `CircularProgressIndicator` while fetching program data.
-- ✅ Implemented try-catch error handling for JSON loading failures.
-- ✅ Displayed user-friendly error messages instead of crashing the application.
+- ✅ Displayed `CircularProgressIndicator` while fetching program data to show loading states.
+- ✅ Implemented `try-catch` error handling for JSON loading failures, displaying user-friendly error messages instead of crashing.
 
-### Files Added
-
-- `assets/programs.json`
-- `lib/models/program.dart`
-- `lib/services/program_service.dart`
-- `lib/screens/registration_screen.dart`
+### Files Added & Modified
+- `assets/programs.json` (New data source)
+- `lib/models/program.dart` (New data model)
+- `lib/services/program_service.dart` (New API service)
+- `lib/screens/registration_screen.dart` (New screen)
+- Modified `program_list_screen.dart` to connect JSON data
+- Modified `program_detail_screen.dart` to add the feedback form
 ---
 "# Team2-Excelerate"
