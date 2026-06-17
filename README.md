@@ -264,14 +264,21 @@ We integrated sample JSON data to dynamically populate our program list, simulat
 #### Screen 5 — Registration Screen
 Contains form validation to ensure users enter valid details before enrolling in a program.
 <p align="center">
-  <img src="assets/screenshots/registration.png" width="280" alt="Registration Screen"/>
+  <img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/bf201de7-f8df-401d-a897-98f709f981bf" />
 </p>
 
 #### Screen 6 — Feedback Form (Program Detail)
 Allows learners to leave reviews and feedback on specific courses.
 <p align="center">
-  <img src="assets/screenshots/feedback.png" width="280" alt="Feedback Form"/>
+  <img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/02c02c33-dc58-4eb6-b2d2-64c2e9124a6a" />
 </p>
+
+### 📱 App Demo
+
+Watch the complete application demo here:
+
+[https://github.com/user-attachments/assets/your-video-id ](https://docs.google.com/videos/d/1LmWKiPiNnZnhel9AMARc43IV1NWjaGR8j0BbJCRJR8k/edit?usp=sharing)
+
 
 ### State Management & User Experience
 - ✅ Used Flutter's `setState()` for managing loading, success, and error states.
