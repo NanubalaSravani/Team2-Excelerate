@@ -16,14 +16,38 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
   final List<String> _filters = ['popular', 'All', 'beginner', 'Advanced', 'Latest'];
 
   List<Program> _programs = [];
+  List<Program> _filteredPrograms = [];
   bool _isLoading = true;
   String _errorMessage = '';
   final ProgramService _programService = ProgramService();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _fetchPrograms();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      if (_searchController.text.isEmpty) {
+        _filteredPrograms = _programs;
+      } else {
+        _filteredPrograms = _programs
+            .where((program) => program.title
+                .toLowerCase()
+                .contains(_searchController.text.toLowerCase()))
+            .toList();
+      }
+    });
   }
 
   Future<void> _fetchPrograms() async {
@@ -31,6 +55,7 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
       final data = await _programService.fetchPrograms();
       setState(() {
         _programs = data;
+        _filteredPrograms = data;
         _isLoading = false;
       });
     } catch (e) {
@@ -80,8 +105,9 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: const Color(0xFFEEEEEE)),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
                   hintText: 'Search programs...',
                   hintStyle:
                       TextStyle(color: Color(0xFFBBBBBB), fontSize: 13),
@@ -164,9 +190,9 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
                   )
                 : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              itemCount: _programs.length,
+              itemCount: _filteredPrograms.length,
               itemBuilder: (context, index) {
-                final program = _programs[index];
+                final program = _filteredPrograms[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(

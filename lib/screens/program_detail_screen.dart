@@ -229,33 +229,35 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                                         ),
                                       ),
                                       const SizedBox(width: 14),
-                                      const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'John Smith',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Color(0xFF1A1A2E),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              program.instructor?.name ?? 'Unknown Instructor',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Color(0xFF1A1A2E),
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'Senior Developer & Trainer',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xFF888888),
+                                            Text(
+                                              program.instructor?.title ?? '',
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Color(0xFF888888),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                   const SizedBox(height: 14),
-                                  const Text(
-                                    'John has over 8 years of experience in mobile and web development. He has trained 1000+ learners across 20+ countries and is passionate about making tech education accessible.',
-                                    style: TextStyle(
+                                  Text(
+                                    program.instructor?.bio ?? '',
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: Color(0xFF555555),
                                       height: 1.6,
@@ -265,14 +267,14 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                               ),
 
                               // Review tab
-                              Column(
-                                children: [
-                                  _reviewTile('Aisha K.',
-                                      'Really loved this course! Very practical and easy to follow.', 5),
-                                  const SizedBox(height: 12),
-                                  _reviewTile('Marcus T.',
-                                      'Great content. Would recommend to anyone starting out.', 4),
-                                ],
+                              ListView.separated(
+                                padding: EdgeInsets.zero,
+                                itemCount: program.reviewsList.length,
+                                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                                itemBuilder: (context, index) {
+                                  final r = program.reviewsList[index];
+                                  return _reviewTile(r.name, r.comment, r.stars);
+                                },
                               ),
                             ],
                           ),

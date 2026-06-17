@@ -10,6 +10,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String? _emailError;
+  String? _passwordError;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +112,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 6),
               TextField(
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Enter your email',
                   hintStyle: const TextStyle(color: Color(0xFFBBBBBB)),
+                  errorText: _emailError,
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16, vertical: 14),
                   border: OutlineInputBorder(
@@ -138,10 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 6),
               TextField(
+                controller: _passwordController,
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
                   hintText: 'Enter your password',
                   hintStyle: const TextStyle(color: Color(0xFFBBBBBB)),
+                  errorText: _passwordError,
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16, vertical: 14),
                   border: OutlineInputBorder(
@@ -195,12 +210,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
+                    setState(() {
+                      _emailError = null;
+                      _passwordError = null;
+
+                      final email = _emailController.text;
+                      final password = _passwordController.text;
+                      bool isValid = true;
+
+                      if (!email.contains('@')) {
+                        _emailError = 'Please enter a valid email with @';
+                        isValid = false;
+                      }
+
+                      if (password.isEmpty) {
+                        _passwordError = 'password cant be empty';
+                        isValid = false;
+                      } else if (password.length < 6) {
+                        _passwordError = 'password must be at least 6 digits';
+                        isValid = false;
+                      }
+
+                      if (isValid) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4A4A6A),
@@ -247,7 +286,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 48,
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Google login feature is under process'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
                   icon: const Text(
                     'G',
                     style: TextStyle(

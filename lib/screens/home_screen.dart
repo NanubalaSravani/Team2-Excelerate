@@ -10,6 +10,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  final TextEditingController _searchController = TextEditingController();
+  List<Map<String, String>> _filteredPrograms = [];
 
   final List<Map<String, dynamic>> _categories = [
     {'icon': Icons.computer_rounded, 'label': 'Tech'},
@@ -35,6 +37,34 @@ class _HomeScreenState extends State<HomeScreen> {
       'tag': 'Intermediate',
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredPrograms = _featuredPrograms;
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      if (_searchController.text.isEmpty) {
+        _filteredPrograms = _featuredPrograms;
+      } else {
+        _filteredPrograms = _featuredPrograms
+            .where((program) => program['title']!
+                .toLowerCase()
+                .contains(_searchController.text.toLowerCase()))
+            .toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: const Color(0xFFEEEEEE)),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: const InputDecoration(
                         hintText: 'Search programs, skills....',
                         hintStyle: TextStyle(
                             color: Color(0xFFBBBBBB), fontSize: 13),
@@ -212,9 +243,9 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 180,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: _featuredPrograms.length,
+                itemCount: _filteredPrograms.length,
                 itemBuilder: (context, index) {
-                  final program = _featuredPrograms[index];
+                  final program = _filteredPrograms[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
