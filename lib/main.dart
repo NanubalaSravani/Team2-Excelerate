@@ -25,4 +25,4 @@ class SkillPathApp extends StatelessWidget {
       home: const LoginScreen(),
     );
   }
-}
+} 
