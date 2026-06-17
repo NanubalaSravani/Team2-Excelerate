@@ -236,17 +236,6 @@ LoginScreen
 
 ---
 
-## Roadmap
-
-| Week | Focus | Status |
-|------|-------|--------|
-| Week 1 | Planning, wireframes, repo setup | ✅ Done |
-| Week 2 | Core UI screens + navigation | ✅ Done |
-| Week 3 | Backend integration, real data, auth | ✅ Done |
-| Week 4 | Dashboard, progress tracking, polish | 🔜 Upcoming |
-
----
-
 ## Week 3 — Data Fetching, Forms & Refactoring ✅
 
 ### What Was Built
@@ -277,7 +266,7 @@ Allows learners to leave reviews and feedback on specific courses.
 
 Watch the complete application demo here:
 
-[https://github.com/user-attachments/assets/your-video-id ](https://docs.google.com/videos/d/1LmWKiPiNnZnhel9AMARc43IV1NWjaGR8j0BbJCRJR8k/edit?usp=sharing)
+[SLU 0106 MAD TEAM - 2 - WEEK 3 Demo Video ](https://docs.google.com/videos/d/1LmWKiPiNnZnhel9AMARc43IV1NWjaGR8j0BbJCRJR8k/edit?usp=sharing)
 
 
 ### State Management & User Experience
@@ -293,4 +282,16 @@ Watch the complete application demo here:
 - Modified `program_list_screen.dart` to connect JSON data
 - Modified `program_detail_screen.dart` to add the feedback form
 ---
+
+## Roadmap
+
+| Week | Focus | Status |
+|------|-------|--------|
+| Week 1 | Planning, wireframes, repo setup | ✅ Done |
+| Week 2 | Core UI screens + navigation | ✅ Done |
+| Week 3 | Backend integration, real data, auth | ✅ Done |
+| Week 4 | Dashboard, progress tracking, polish | 🔜 Upcoming |
+
+---
+
 "# Team2-Excelerate"
