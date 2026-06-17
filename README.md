@@ -294,4 +294,4 @@ Watch the complete application demo here:
 
 ---
 
-# Team2-Excelerate
+# Team2-Excelerate SLU 0106 MAD - WEEK 3
