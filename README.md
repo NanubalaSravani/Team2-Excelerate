@@ -256,6 +256,7 @@ We integrated sample JSON data to dynamically populate our program list, simulat
 - ✅ **API Integration:** Created `assets/programs.json` and a `ProgramService` to fetch dynamic program data asynchronously using `rootBundle`.
 - ✅ **Registration Form:** Built `RegistrationScreen` with proper form validation (valid email format, minimum password length, etc.) using `TextFormField` and `DropdownButtonFormField`.
 - ✅ **Feedback Form:** Added a functional feedback/rating form on the `ProgramDetailScreen`.
+- ✅ **Search Option:** Implemented search functionality to allow learners to easily find specific programs.
 - ✅ **App Architecture:** Refactored the app structure into `models/` and `services/` for better code maintainability.
 
 ### Screens Added

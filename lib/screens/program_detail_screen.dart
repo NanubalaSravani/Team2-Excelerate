@@ -16,6 +16,10 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
   late TabController _tabController;
   bool _isBookmarked = false;
 
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _feedbackController = TextEditingController();
+  int _selectedRating = 5;
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +29,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
   @override
   void dispose() {
     _tabController.dispose();
+    _feedbackController.dispose();
     super.dispose();
   }
 
@@ -167,7 +172,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
 
                         // Tab content
                         SizedBox(
-                          height: 220,
+                          height: 320,
                           child: TabBarView(
                             controller: _tabController,
                             children: [
@@ -267,14 +272,106 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen>
                               ),
 
                               // Review tab
-                              ListView.separated(
+                              SingleChildScrollView(
                                 padding: EdgeInsets.zero,
-                                itemCount: program.reviewsList.length,
-                                separatorBuilder: (context, index) => const SizedBox(height: 12),
-                                itemBuilder: (context, index) {
-                                  final r = program.reviewsList[index];
-                                  return _reviewTile(r.name, r.comment, r.stars);
-                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ...program.reviewsList.map((r) => Padding(
+                                      padding: const EdgeInsets.only(bottom: 12.0),
+                                      child: _reviewTile(r.name, r.comment, r.stars),
+                                    )),
+                                    const SizedBox(height: 16),
+                                    const Text(
+                                      'Leave a Review',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF1A1A2E),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: List.generate(5, (index) {
+                                              return IconButton(
+                                                padding: EdgeInsets.zero,
+                                                constraints: const BoxConstraints(),
+                                                icon: Icon(
+                                                  Icons.star_rounded,
+                                                  color: index < _selectedRating
+                                                      ? const Color(0xFFFFC107)
+                                                      : const Color(0xFFDDDDDD),
+                                                  size: 28,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _selectedRating = index + 1;
+                                                  });
+                                                },
+                                              );
+                                            }),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          TextFormField(
+                                            controller: _feedbackController,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              hintText: 'Write your feedback here...',
+                                              hintStyle: const TextStyle(fontSize: 13, color: Color(0xFFBBBBBB)),
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                                borderSide: const BorderSide(color: Color(0xFFEEEEEE)),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                                borderSide: const BorderSide(color: Color(0xFFEEEEEE)),
+                                              ),
+                                            ),
+                                            validator: (value) {
+                                              if (value == null || value.trim().isEmpty) {
+                                                return 'Please enter your feedback';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          const SizedBox(height: 12),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                if (_formKey.currentState!.validate()) {
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    const SnackBar(content: Text('Feedback submitted successfully!')),
+                                                  );
+                                                  _feedbackController.clear();
+                                                  setState(() {
+                                                    _selectedRating = 5;
+                                                  });
+                                                }
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: const Color(0xFF4A90D9),
+                                                foregroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                              child: const Text('Submit Review'),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
